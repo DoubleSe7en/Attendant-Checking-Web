@@ -322,6 +322,7 @@ var insert_users = [
     ['Super', 'Admin', 'admin@fit.hcmus.edu.vn', '01228718705', bcrypt.hashSync('admin', 10), 4], //170
 
     //['Huỳnh Hữu', 'Nghĩa', '1412572@student.hcmus.edu.vn', '01228718705', bcrypt.hashSync('1353019', 10), 1], //171
+	['Sample', 'Admin2', 'admin2@fit.hcmus.edu.vn', '01231231234', bcrypt.hashSync('admin2', 10), 4],
 ];
 //[teacher_id,course_id,teacher_role],
 var insert_teacher_teach_course = [
@@ -1362,6 +1363,7 @@ var seeding_postgres = function(res) {
 
 var insert_admin = [
     ['Super', 'Admin', 'admin@fit.hcmus.edu.vn', '01228718705', bcrypt.hashSync('admin', 10), 4], //1
+	['Sample', 'Admin2', 'admin2@fit.hcmus.edu.vn', '01231231234', bcrypt.hashSync('admin2', 10), 4],
 ];
 var seeding_admin = function(res) {
     pool_postgres.connect(function(error, connection, done) {
