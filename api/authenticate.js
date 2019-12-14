@@ -15,7 +15,7 @@ var invalid_token = [];
 
 router.post('/login', function(req, res, next) {
     if (req.body.username == undefined || req.body.username == '') {
-        _global.sendError(res, null, 'Username is required');
+        _global.sendError(res, null, 'Thiếu username');
         return;
     }
     if (req.body.password == undefined || req.body.password == '') {
@@ -31,47 +31,32 @@ router.post('/login', function(req, res, next) {
             return console.log(error);
         }
 
-        // connection.query(format(`SELECT * FROM users WHERE email LIKE %L`, username + '@%'), function(error, result, fields) {
-        //     if (error) {
-        //         _global.sendError(res, error.message);
-        //         done();
-        //         return console.log(error);
-        //     }
-        //     //check user exist
-        //     if (result.rowCount == 0) {
-        //         _global.sendError(res, null, "Username not found");
-        //         done();
-        //         return console.log("Username is not existed");
-        //     }
-        //     for(var i = 0 ; i < result.rowCount ; i++){
-        //         var password_hash = result.rows[i].password;
-        //         if(password_hash != null && password_hash != ''){
-        //             if (bcrypt.compareSync(password, password_hash)) {
-        //                 var token = jwt.sign(result.rows[i], _global.jwt_secret_key, { expiresIn: _global.jwt_expire_time });
-        //                 res.send({ result: 'success', token: token, user: result.rows[i] });
-        //                 done();
-        //                 return
-        //             }
-        //         }
-        //     }
-        //     _global.sendError(res, null, "Wrong password");
-        //     done();
-        //     return console.log("Wrong password");
-        // });
-        connection.query(`SELECT teachers.id,first_name,last_name,phone,email,current_courses 
-        FROM teachers,users
-        WHERE teachers.id = users.id`, function(error, result, fields) {
+        connection.query(format(`SELECT * FROM users WHERE email LIKE %L`, username + '@%'), function(error, result, fields) {
             if (error) {
                 _global.sendError(res, error.message);
                 done();
                 return console.log(error);
             }
-
-            teacher_list = result.rows;
-            console.log("Danh sách");
-            console.log(teacher_list);
-        
+            //check user exist
+            if (result.rowCount == 0) {
+                _global.sendError(res, null, "Username not found");
+                done();
+                return console.log("Username is not existed");
+            }
+            for(var i = 0 ; i < result.rowCount ; i++){
+                var password_hash = result.rows[i].password;
+                if(password_hash != null && password_hash != ''){
+                    if (bcrypt.compareSync(password, password_hash)) {
+                        var token = jwt.sign(result.rows[i], _global.jwt_secret_key, { expiresIn: _global.jwt_expire_time });
+                        res.send({ result: 'success', token: token, user: result.rows[i] });
+                        done();
+                        return
+                    }
+                }
+            }
+            _global.sendError(res, null, "Wrong password");
             done();
+            return console.log("Wrong password");
         });
     });
 });
