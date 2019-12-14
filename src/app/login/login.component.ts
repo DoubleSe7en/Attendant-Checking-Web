@@ -27,6 +27,9 @@ export class LoginComponent implements OnInit {
     }
     public login() {
         this.authService.redirectMessage = '';
+        console.log(this.username);
+        console.log(this.password);
+        
         this.authService.login(this.username,this.password).subscribe(results => {
             if(results.result == 'success'){
                 this.authService.token = results.token;

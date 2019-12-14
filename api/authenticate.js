@@ -15,7 +15,7 @@ var invalid_token = [];
 
 router.post('/login', function(req, res, next) {
     if (req.body.username == undefined || req.body.username == '') {
-        _global.sendError(res, null, 'Thiếu username');
+        _global.sendError(res, null, 'Username is required');
         return;
     }
     if (req.body.password == undefined || req.body.password == '') {
@@ -54,9 +54,9 @@ router.post('/login', function(req, res, next) {
                     }
                 }
             }
-            _global.sendError(res, null, "Wrong password");
+            _global.sendError(res, null, "Sai mật khẩu");
             done();
-            return console.log("Wrong password");
+            return console.log("Sai mật khẩu");
         });
     });
 });
