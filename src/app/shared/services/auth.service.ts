@@ -29,9 +29,12 @@ export class AuthService {
             'username': username,
             'password': password
         };
+        console.log(this.loginUrl);
         return this.http.post(this.loginUrl, params)
             // ...and calling .json() on the response to return data
-            .map((res: Response) => res.json())
+            .map((res: Response) => {res.json()
+                console.log(res);
+            })
             //...errors if any
             .catch((error: any) => Observable.throw(error || 'Server error'));
     }
